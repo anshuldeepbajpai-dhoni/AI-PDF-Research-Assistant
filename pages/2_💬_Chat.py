@@ -19,6 +19,12 @@ from utils.session_manager import (
 from utils.database import get_chat_sessions
 from utils.pdf_manager import get_document_names
 
+from utils.export import (
+    export_markdown,
+    export_docx,
+    export_pdf
+)
+
 
 # =====================================================
 # Page Title
@@ -110,6 +116,54 @@ if st.sidebar.button("🗑 Delete Current Chat"):
 
     st.rerun()
 
+st.sidebar.divider()
+
+st.sidebar.subheader("📥 Export Chat")
+
+history = load_conversations(current_session)
+
+if history:
+
+    chat_data = [
+        (question, answer)
+        for question, answer, _ in history
+    ]
+
+    markdown_data = export_markdown(chat_data)
+
+    docx_data = export_docx(chat_data)
+
+    pdf_data = export_pdf(chat_data)
+
+    timestamp = current_session
+
+    st.sidebar.download_button(
+        "📝 Markdown",
+        markdown_data,
+        file_name=f"chat_{timestamp}.md",
+        mime="text/markdown"
+    )
+
+    st.sidebar.download_button(
+        "📄 Word",
+        docx_data,
+        file_name=f"chat_{timestamp}.docx",
+        mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    )
+
+    st.sidebar.download_button(
+        "📕 PDF",
+        pdf_data,
+        file_name=f"chat_{timestamp}.pdf",
+        mime="application/pdf"
+    )
+
+else:
+
+    st.sidebar.info(
+        "No chat available to export."
+    )
+
 # =====================================================
 # Load Chat History
 # =====================================================
@@ -136,6 +190,7 @@ if "messages" not in st.session_state:
             }
 
         )
+
 
 # =====================================================
 # Display Previous Messages
@@ -191,13 +246,11 @@ if question:
 
             st.divider()
 
-            st.markdown("### 📚 Sources")
+            with st.expander("📚 Sources", expanded=False):
 
-            for source in sources:
+                for source in sources:
 
-                st.markdown(
-                    f"- **{source['file']}** — Page {source['page']}"
-                )
+                    st.markdown(source)
 
     # -------------------------
     # Save Assistant Message

@@ -2,6 +2,9 @@ import google.generativeai as genai
 
 from config import GOOGLE_API_KEY
 from utils.vectordb import similarity_search
+from utils.hybrid_search import hybrid_search
+from utils.prompt_builder import build_prompt
+from utils.citations import format_citations
 
 genai.configure(api_key=GOOGLE_API_KEY)
 
@@ -15,10 +18,14 @@ def ask_gemini(question, selected_document=None):
     """
 
     # Retrieve relevant chunks
-    docs = similarity_search(
+    docs = hybrid_search(
         query=question,
-        selected_document=selected_document,
-        k=5
+        selected_document=selected_document
+    )
+
+    prompt, citations = build_prompt(
+        question,
+        docs
     )
 
     if not docs:
@@ -80,4 +87,7 @@ Question:
             seen.add(key)
             unique_sources.append(source)
 
-    return answer, unique_sources
+    return (
+        response.text,
+        format_citations(citations)
+    )

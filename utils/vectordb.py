@@ -5,7 +5,11 @@ os.environ["ANONYMIZED_TELEMETRY"] = "False"
 from langchain_chroma import Chroma
 
 from utils.embeddings import get_embedding_model
+from chromadb.config import Settings
 
+settings = Settings(
+    anonymized_telemetry=False
+)
 
 CHROMA_PATH = "chroma_db"
 COLLECTION_NAME = "research_documents"
@@ -26,6 +30,53 @@ def get_vector_db():
 
     return db
 
+def get_all_documents(selected_document=None):
+    """
+    Retrieve all stored documents from Chroma.
+
+    This is used by BM25 indexing and Hybrid Search.
+    """
+
+    db = get_vector_db()
+
+    if selected_document is None:
+
+        results = db._collection.get(
+            include=["documents", "metadatas"]
+        )
+
+    else:
+
+        results = db._collection.get(
+            where={
+                "source": selected_document
+            },
+            include=["documents", "metadatas"]
+        )
+
+    from langchain_core.documents import Document
+
+    documents = []
+
+    docs = results.get("documents", [])
+    metas = results.get("metadatas", [])
+
+    for text, metadata in zip(docs, metas):
+
+        documents.append(
+
+            Document(
+
+                page_content=text,
+
+                metadata=metadata
+
+            )
+
+        )
+
+    return documents
+
 
 def create_vector_db(chunks):
     """
@@ -38,29 +89,38 @@ def create_vector_db(chunks):
 
     return db
 
-
-def similarity_search(query, selected_document=None, k=5):
+def similarity_search(
+    query,
+    selected_document=None,
+    k=6
+):
     """
-    Search the vector database.
-
-    If selected_document is None -> search all PDFs.
-    Otherwise search only the selected PDF.
+    Perform MMR search while preventing
+    fetch_k from exceeding collection size.
     """
 
     db = get_vector_db()
+
+    collection = db._collection
+
+    total_chunks = collection.count()
+
+    fetch_k = min(20, total_chunks)
+
+    k = min(k, fetch_k)
 
     if selected_document is None:
 
         return db.max_marginal_relevance_search(
             query=query,
             k=k,
-            fetch_k=20
+            fetch_k=fetch_k
         )
 
     return db.max_marginal_relevance_search(
         query=query,
         k=k,
-        fetch_k=20,
+        fetch_k=fetch_k,
         filter={
             "source": selected_document
         }
