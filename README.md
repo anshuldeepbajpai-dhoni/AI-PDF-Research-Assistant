@@ -279,7 +279,7 @@ This project is licensed under the MIT License.
 **Anshul Deep Bajpai**
 
 - GitHub: https://github.com/anshuldeepbajpai-dhoni
-- LinkedIn: *(Add your LinkedIn profile URL here)*
+- LinkedIn: www.linkedin.com/in/anshul-deep-bajpai-441b1b37b
 
 ---
 
