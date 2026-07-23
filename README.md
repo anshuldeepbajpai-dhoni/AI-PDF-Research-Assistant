@@ -1,66 +1,111 @@
 # 🧠 AI PDF Research Assistant
 
-> An intelligent AI-powered PDF research assistant built with **Streamlit, LangChain, ChromaDB, Google Gemini, and SQLite**. Upload multiple PDFs, chat with them using Retrieval-Augmented Generation (RAG), manage multiple conversations, and analyze your document library through an interactive dashboard.
+> An intelligent AI-powered PDF Research Assistant built with **Streamlit, LangChain, ChromaDB, Google Gemini, and SQLite**. Upload multiple PDFs, chat with them using Retrieval-Augmented Generation (RAG), generate study materials, export conversations, and analyze your document library through an interactive dashboard.
 
 ---
 
-## ✨ Features
+# ✨ Features
 
-### 📄 Document Management
+## 📄 Document Management
+
 - Upload multiple PDF documents
+- OCR support for scanned PDFs
 - Automatic text extraction and chunking
-- Semantic embedding generation
+- Embedding generation
 - ChromaDB vector storage
-- Delete documents from storage and vector database
+- Delete PDFs from storage and vector database
 - Multi-document management
 
-### 🤖 AI Chat
-- Chat with uploaded PDFs using Google Gemini
+---
+
+## 🤖 AI Chat
+
+- Google Gemini powered conversations
 - Retrieval-Augmented Generation (RAG)
+- Hybrid Search (Semantic + BM25)
 - Search across all documents
-- Search within a specific document
+- Search within a specific PDF
+- Context-aware prompt building
 - Source citations with page numbers
 - Persistent chat history
 - Multiple chat sessions
 
-### 📊 Analytics Dashboard
-- Total documents
-- Total pages
-- Total chunks
-- Storage usage
+---
+
+## 🎓 AI Study Tools
+
+- AI Notes Generator
+- Flashcard Generator
+- Quiz Generator
+- Interview Question Generator
+- MCQ Generator
+
+---
+
+## 📊 Analytics Dashboard
+
+- Total Documents
+- Total Pages
+- Total Chunks
+- Storage Usage
 - Pages per PDF
 - Chunks per PDF
-- Upload timeline
-- Storage distribution charts
+- Upload Timeline
+- Storage Distribution
+- Interactive Charts
 
-### 💾 Database
+---
+
+## 📤 Export
+
+- Export Chat as PDF
+- Export Chat as DOCX
+- Export Chat as Markdown
+
+---
+
+## 💾 Database
+
 - SQLite metadata storage
 - Persistent chat history
 - Persistent chat sessions
-- Document metadata management
+- Document metadata
+- Analytics metadata
 
 ---
 
 # 🚀 Tech Stack
 
 ## Frontend
+
 - Streamlit
 
 ## Backend
+
 - Python 3.11
 
 ## AI & NLP
+
 - Google Gemini
 - LangChain
 - Sentence Transformers
 
+## Search
+
+- Semantic Search
+- BM25 Search
+- Hybrid Retrieval
+
 ## Vector Database
+
 - ChromaDB
 
 ## Database
+
 - SQLite
 
 ## Visualization
+
 - Plotly
 - Pandas
 
@@ -71,34 +116,47 @@
 ```text
 AI-PDF-Research-Assistant/
 
-│
 ├── app.py
-│
 ├── assets/
+│   ├── style.css
+│   ├── logo.png
+│   └── icons/
 │
 ├── pages/
 │   ├── 1_📄_Documents.py
 │   ├── 2_💬_Chat.py
 │   ├── 3_📊_Analytics.py
-│   └── 4_⚙️_Settings.py
+│   ├── 4_🎓_Study_Tools.py
+│   └── 5_⚙️_Settings.py
 │
 ├── utils/
 │   ├── analytics.py
+│   ├── bm25.py
 │   ├── chatbot.py
 │   ├── chat_history.py
+│   ├── citations.py
 │   ├── database.py
 │   ├── embeddings.py
+│   ├── export.py
+│   ├── hybrid_search.py
+│   ├── interactive_tools.py
 │   ├── loader.py
+│   ├── memory.py
+│   ├── ocr.py
 │   ├── pdf_manager.py
+│   ├── pdf_viewer.py
+│   ├── prompt_builder.py
+│   ├── reranker.py
 │   ├── session_manager.py
 │   ├── splitter.py
+│   ├── study_tools.py
+│   ├── theme.py
 │   └── vectordb.py
 │
-├── pdfs/
 ├── chroma_db/
 ├── database/
 │   └── chat.db
-│
+├── pdfs/
 ├── requirements.txt
 └── README.md
 ```
@@ -115,23 +173,21 @@ git clone https://github.com/anshuldeepbajpai-dhoni/AI-PDF-Research-Assistant.gi
 cd AI-PDF-Research-Assistant
 ```
 
----
-
-## Create Virtual Environment
-
-```bash
-python -m venv venv
-```
+## Create a Virtual Environment
 
 ### Windows
 
 ```bash
+python -m venv venv
+
 venv\Scripts\activate
 ```
 
 ### Linux / macOS
 
 ```bash
+python3 -m venv venv
+
 source venv/bin/activate
 ```
 
@@ -166,20 +222,24 @@ streamlit run app.py
 # 🖥️ Application Modules
 
 ## 📄 Documents
+
 - Upload PDFs
+- OCR Processing
 - Delete PDFs
-- Automatic indexing
-- ChromaDB storage
+- Automatic Indexing
+- ChromaDB Storage
 
 ---
 
 ## 💬 Chat
 
 - AI-powered conversations
+- Hybrid Search
 - Multiple chat sessions
 - Persistent history
-- Source references
-- Search one or all documents
+- Source citations
+- Search specific PDF
+- Search all PDFs
 
 ---
 
@@ -192,52 +252,105 @@ streamlit run app.py
 
 ---
 
+## 🎓 Study Tools
+
+- Notes Generator
+- Flashcards
+- Quiz Generator
+- Interview Questions
+- MCQs
+
+---
+
 ## ⚙️ Settings
 
 - Application configuration
-- Future customization options
+- Theme settings
+- Model settings
 
 ---
 
 # 📈 Current Features
 
-- ✅ Multi PDF Upload
-- ✅ Semantic Search
-- ✅ Google Gemini Integration
-- ✅ ChromaDB Vector Store
-- ✅ LangChain Pipeline
-- ✅ Multi-Session Chat
-- ✅ Persistent Chat History
-- ✅ SQLite Database
-- ✅ Analytics Dashboard
-- ✅ Source Citations
-- ✅ Search Specific PDF
-- ✅ Search Across All PDFs
+| Feature | Status |
+|---------|:------:|
+| Multi PDF Upload | ✅ |
+| OCR Support | ✅ |
+| Semantic Search | ✅ |
+| BM25 Search | ✅ |
+| Hybrid Search | ✅ |
+| Google Gemini Integration | ✅ |
+| ChromaDB Vector Store | ✅ |
+| LangChain Pipeline | ✅ |
+| Persistent Chat History | ✅ |
+| Multi-Session Chat | ✅ |
+| SQLite Database | ✅ |
+| Analytics Dashboard | ✅ |
+| Source Citations | ✅ |
+| Search Specific PDF | ✅ |
+| Search Across PDFs | ✅ |
+| AI Notes Generator | ✅ |
+| Flashcard Generator | ✅ |
+| Quiz Generator | ✅ |
+| Interview Questions | ✅ |
+| Chat Export (PDF/DOCX/Markdown) | ✅ |
+| Premium UI | ✅ |
 
 ---
 
-# 🚧 Upcoming Features
+# 🚀 Upcoming Features (Phase 9)
 
-- OCR Support for Scanned PDFs
-- Export Chat (PDF / DOCX / Markdown)
-- AI Notes Generator
-- Flashcard Generator
-- Quiz Generator
-- MCQ Generator
-- Hybrid Search (BM25 + Semantic Search)
-- Dark Mode
-- Modern UI
-- AI Research Agent
+- ⚡ Streaming AI Responses
+- 🧠 Long-Term Memory
+- 🎯 Cross-Encoder Reranking
+- 🎤 Voice Chat
+- 📌 PDF Highlight Navigation
+- 🔍 Conversation Search
+- 📚 AI Research Timeline
+- 🤖 Autonomous AI Research Agent
 
 ---
 
 # 📸 Screenshots
 
-> Add screenshots of:
-- Documents Page
-- Chat Page
-- Analytics Dashboard
-- Multiple Chat Sessions
+Add screenshots for:
+
+- 🏠 Home Page
+- 📄 Documents Page
+- 💬 Chat Interface
+- 📊 Analytics Dashboard
+- 🎓 Study Tools
+- 📝 AI Notes
+- 🧠 Flashcards
+- ❓ Quiz Generator
+
+---
+
+# ⭐ Highlights
+
+- 🚀 Production-Ready RAG Architecture
+- 🧠 Hybrid Retrieval (Semantic + BM25)
+- 📚 AI Study Assistant
+- 💬 Multi-Session Chat
+- 📊 Analytics Dashboard
+- 📤 Export Support
+- 📄 OCR Enabled
+- 🎨 Premium UI
+- ⚡ Fast ChromaDB Search
+
+---
+
+# 🛣️ Roadmap
+
+- ✅ Phase 1 — Project Setup
+- ✅ Phase 2 — Multi-PDF Upload
+- ✅ Phase 3 — OCR Integration
+- ✅ Phase 4 — ChromaDB Integration
+- ✅ Phase 5 — Gemini Chat
+- ✅ Phase 6 — Chat History & Export
+- ✅ Phase 7 — AI Study Tools
+- ✅ Phase 8 — Hybrid Search & Premium UI
+- 🚀 Phase 9 — Production AI Research Assistant
 
 ---
 
@@ -252,13 +365,13 @@ Contributions are welcome!
 git checkout -b feature-name
 ```
 
-3. Commit changes
+3. Commit your changes
 
 ```bash
 git commit -m "Add new feature"
 ```
 
-4. Push
+4. Push to GitHub
 
 ```bash
 git push origin feature-name
@@ -279,7 +392,7 @@ This project is licensed under the MIT License.
 **Anshul Deep Bajpai**
 
 - GitHub: https://github.com/anshuldeepbajpai-dhoni
-- LinkedIn: www.linkedin.com/in/anshul-deep-bajpai-441b1b37b
+- LinkedIn: https://www.linkedin.com/in/anshul-deep-bajpai-441b1b37b/
 
 ---
 
